@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SpaceScanning_Colocate.unity
+    guid: 29ab18eee785dd846ae38c61647d51ef
   - enabled: 1
     path: Assets/Scenes/Main.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    guid: 0adda3c1e664f9043b8e4ba3298a090d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 472ef7f1ac4b51549b280886eabfa378, type: 2}
