@@ -52,7 +52,6 @@ public class PanelPlacement : MonoBehaviour
         }
         SetScreen(out Pose surfacePose);
         _placeWithAnchor.RequestMove(surfacePose);
-        Debug.Log("Panel placement requested.");
         _isPlacing = true;
         var rb = screen.GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -61,8 +60,6 @@ public class PanelPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("PanelPlacement update." + NetworkManager.Singleton.IsHost);
-        Debug.Log("IsPlacing: " + _isPlacing);
         if (NetworkManager.Singleton.IsHost)
         {
             Ray ray = new Ray(rayStartPoint.position, rayStartPoint.forward);
@@ -79,7 +76,6 @@ public class PanelPlacement : MonoBehaviour
                 screen.rotation = Quaternion.LookRotation(-hit.normal, Vector3.up);
 
                 const float scaleSpeed = 1.5f;
-                Debug.Log($"Thumbstick: {OVRInput.Get(_scaleAxis)}");
                 var screenScaleX = screen.localScale.x;
                 var screenScaleY = screen.localScale.y;
                 screenScaleX *= 1f + OVRInput.Get(_scaleAxis).x * scaleSpeed * Time.deltaTime;

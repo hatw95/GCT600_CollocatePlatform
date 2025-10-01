@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SpaceScanning_Colocate.unity
     guid: 29ab18eee785dd846ae38c61647d51ef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main.unity
     guid: 0adda3c1e664f9043b8e4ba3298a090d
+  - enabled: 0
+    path: Assets/Scenes/Main 1.unity
+    guid: 15d5defbd8fc4624882be13bfb5156bc
+  - enabled: 1
+    path: Assets/Scenes/Main_UI.unity
+    guid: e28c9e4c413105343b450db6604c2c30
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 472ef7f1ac4b51549b280886eabfa378, type: 2}

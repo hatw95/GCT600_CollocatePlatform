@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Touch
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - OVROverlayCanvas Rendering
   - Touch
   m_SortingLayers:
   - name: Default
