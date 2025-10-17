@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Visualization</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            margin: 0;
+            overflow: hidden;
+        }
+        #visualization-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+        }
+        .circle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #e74c3c;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease-out;
+            z-index: 10;
+        }
+        
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 120px;
+            z-index: 5;
+        }
+        
+        .button {
+            width: 240px;
+            height: 240px;
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            background-color: rgba(52, 152, 219, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            color: #3498db;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .button:hover {
+            background-color: rgba(52, 152, 219, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .button.active {
+            background-color: rgba(231, 76, 60, 0.6);
+            border-color: #e74c3c;
+            color: #e74c3c;
+            transform: scale(1.1);
+        }
+        
+        #status {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="visualization-container">
+        <div class="circle" id="coord-circle"></div>
+        <div class="button-container">
+            <div class="button" id="button-0">0</div>
+            <div class="button" id="button-1">1</div>
+            <div class="button" id="button-2">2</div>
+        </div>
+        <div id="status">Circle 위치: 대기 중...</div>
+    </div>
+
+    <script>
+        const circle = document.getElementById('coord-circle');
+        const container = document.getElementById('visualization-container');
+        const status = document.getElementById('status');
+        const buttons = [
+            document.getElementById('button-0'),
+            document.getElementById('button-1'),
+            document.getElementById('button-2')
+        ];
+        
+        let currentButtonIndex = -1;
+
+        function updateCoordinates() {
+            fetch('/get_coordinates')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.x !== null && data.y !== null) {
+                        // 현재 브라우저 창의 크기 가져오기
+                        const containerWidth = container.offsetWidth;
+                        const containerHeight = container.offsetHeight;
+                        
+                        // 정규화된 좌표를 픽셀 좌표로 변환
+                        const pixelX = data.x * containerWidth;
+                        const pixelY = data.y * containerHeight;
+
+                        // 원의 위치 업데이트
+                        circle.style.left = pixelX + 'px';
+                        circle.style.top = pixelY + 'px';
+                        circle.style.display = 'block';
+                        
+                        // 버튼과의 충돌 감지
+                        checkButtonCollision(pixelX, pixelY);
+                    }
+                })
+                .catch(error => console.error('Error fetching coordinates:', error));
+        }
+
+        function checkButtonCollision(circleX, circleY) {
+            let hitButtonIndex = -1;
+            
+            buttons.forEach((button, index) => {
+                const buttonRect = button.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                
+                // 버튼의 상대적 위치 계산
+                const buttonLeft = buttonRect.left - containerRect.left;
+                const buttonTop = buttonRect.top - containerRect.top;
+                const buttonRight = buttonLeft + buttonRect.width;
+                const buttonBottom = buttonTop + buttonRect.height;
+                
+                // 원이 버튼 안에 있는지 확인
+                if (circleX >= buttonLeft && circleX <= buttonRight && 
+                    circleY >= buttonTop && circleY <= buttonBottom) {
+                    hitButtonIndex = index;
+                }
+            });
+            
+            // 버튼 상태 업데이트
+            updateButtonStates(hitButtonIndex);
+
+            // hitButtonIndex를 서버로 전송
+            fetch('/update_button_index', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    buttonIndex: hitButtonIndex
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    console.error('Failed to update button index on server');
+                }
+            })
+            .catch(error => console.error('Error sending button index:', error));
+
+            // 상태 메시지 업데이트
+            if (hitButtonIndex !== -1) {
+                status.textContent = `Circle이 버튼 ${hitButtonIndex} 안에 있습니다!`;
+                console.log(`버튼 ${hitButtonIndex} 감지됨`);
+            } else {
+                status.textContent = 'Circle 위치: 버튼 밖';
+            }
+        }
+
+        function updateButtonStates(activeIndex) {
+            buttons.forEach((button, index) => {
+                if (index === activeIndex) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            
+            // 현재 활성 버튼 인덱스 업데이트
+            if (currentButtonIndex !== activeIndex) {
+                currentButtonIndex = activeIndex;
+                if (activeIndex !== -1) {
+                    console.log(`버튼 ${activeIndex} 활성화됨`);
+                }
+            }
+        }
+
+        // 100밀리초(0.1초)마다 updateCoordinates 함수 실행
+        setInterval(updateCoordinates, 100);
+    </script>
+</body>
+</html>
