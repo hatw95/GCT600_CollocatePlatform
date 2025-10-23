@@ -79,9 +79,9 @@ public class PanelPlacement : MonoBehaviour
                 var screenScaleX = screen.localScale.x;
                 var screenScaleY = screen.localScale.y;
                 screenScaleX *= 1f + OVRInput.Get(_scaleAxis).x * scaleSpeed * Time.deltaTime;
-                screenScaleX = Mathf.Clamp(screenScaleX, 0.2f, 2.0f);
+                screenScaleX = Mathf.Clamp(screenScaleX, 0.2f, 10.0f);
                 screenScaleY *= 1f + OVRInput.Get(_scaleAxis).y * scaleSpeed * Time.deltaTime;
-                screenScaleY = Mathf.Clamp(screenScaleY, 0.2f, 2.0f);
+                screenScaleY = Mathf.Clamp(screenScaleY, 0.2f, 10.0f);
                 screen.localScale = new Vector3(screenScaleX, screenScaleY, 0.005f);
             }
 

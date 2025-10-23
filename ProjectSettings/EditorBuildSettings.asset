@@ -5,18 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SpaceScanning_Colocate.unity
-    guid: 29ab18eee785dd846ae38c61647d51ef
-  - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: e28c9e4c413105343b450db6604c2c30
-  - enabled: 0
-    path: Assets/Scenes/Main 1.unity
-    guid: 88559fe774b333a4b8b0c2fa50050aaf
-  - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: e28c9e4c413105343b450db6604c2c30
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: e28c9e4c413105343b450db6604c2c30

@@ -15,13 +15,13 @@ public class TouchDetector : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Touch");
         index1 = skeleton.Bones.FirstOrDefault(x => x.Id == OVRSkeleton.BoneId.XRHand_IndexTip)?.Transform;
         var indexVec = index1 != null ? (index1.position - transform.position).normalized : transform.forward;
-        Physics.Raycast(transform.position, indexVec, out RaycastHit hitInfo, 0.2f, layerMask);
+        Physics.Raycast(transform.position, indexVec, out RaycastHit hitInfo, 0.3f, layerMask);
 
         LineRenderer lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer != null)
         {
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, transform.position + indexVec * 0.2f);
+            lineRenderer.SetPosition(1, transform.position + indexVec * 0.3f);
         }
         // if (hitInfo.collider == null)
         // {
