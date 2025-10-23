@@ -98,14 +98,18 @@ cd GCT600_CollocatePlatform
 git remote add upstream https://github.com/hatw95/GCT600_CollocatePlatform.git
 git checkout -b team_1
 ```
-4. Assets/teams/team_{팀번호}/ 생성
+4.
+Assets/teams/team_{팀번호}/ 생성
+
 구성 예시
+```yaml
 Assets/teams/team_1/
  ┣ Scenes/
  ┣ Scripts/
  ┣ Prefabs/
  ┣ Materials/
  ┗ README.md
+ ```
 README.md 예시
 ```markdown
 # Team 1
@@ -133,18 +137,22 @@ git push -u origin team_1
 ```
 
 6. Pull Request 생성
-GitHub에서 포크된 저장소로 이동
-상단의 Compare&pull request 클릭
-제목과 설명을 수정 후 Create pull requeset 버튼을 클릭
+
+GitHub에서 포크된 저장소로 이동 -> 상단의 Compare&pull request 클릭 -> 제목과 설명을 수정 후 Create pull requeset 버튼을 클릭
+
 
 ---
 
 ⚠️ 주의 사항
 
 반드시 자신의 팀 브랜치(team_x) 에서만 작업하세요.
+
 main 브랜치에는 직접 커밋하지 않습니다.
+
 팀 폴더 외부 수정 금지! (충돌 및 merge 거부 사유)
+
 대용량 파일(>100MB)은 업로드 금지 — 필요시 Git LFS 또는 외부 링크 사용
+
 외부 에셋 사용 시 출처와 라이선스를 README.md에 반드시 명시
 
 ---
