@@ -19,11 +19,12 @@ public class ScreenComm : MonoBehaviour
     private Uri serverUri;
     private CancellationTokenSource cts;
     private int buttonIndex = -1;
-    private bool isFlask = true;
+    private bool isConnected = true;
+    private bool isPaused = false;
 
     public void ToggleSetFlask(bool toggle)
     {
-        isFlask = toggle;
+        isConnected = toggle;
         ConnectWebSocket();
     }
 
@@ -32,7 +33,7 @@ public class ScreenComm : MonoBehaviour
         ws = new ClientWebSocket();
         cts = new CancellationTokenSource();
 
-        serverUri = isFlask ? new Uri(serverURL) : new Uri(serverURL.Replace("/ws", ""));
+        serverUri = isConnected ? new Uri(serverURL) : new Uri(serverURL.Replace("/ws", ""));
         await ws.ConnectAsync(serverUri, cts.Token);
 
         _ = Task.Run(ReceiveLoop);
@@ -43,6 +44,13 @@ public class ScreenComm : MonoBehaviour
         var buffer = new byte[1024];
         while (ws.State == WebSocketState.Open)
         {
+            // 앱이 일시정지 상태일 때는 메시지 수신을 건너뜀
+            if (isPaused)
+            {
+                await Task.Delay(100); // 100ms 대기 후 다시 확인
+                continue;
+            }
+
             WebSocketReceiveResult result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), cts.Token);
             if (result.MessageType == WebSocketMessageType.Text)
             {
@@ -68,7 +76,7 @@ public class ScreenComm : MonoBehaviour
 
     public async void SendCoordinates(Vector2 coords, int tag)
     {
-        if (ws == null || ws.State != WebSocketState.Open) return;
+        if (ws == null || ws.State != WebSocketState.Open || isPaused) return;
 
         string json = "{\"x\":" + coords.x + ", \"y\":" + coords.y + ", \"tag\":" + tag + "}";
         ArraySegment<byte> bytesToSend = new ArraySegment<byte>(Encoding.UTF8.GetBytes(json));
@@ -105,6 +113,32 @@ public class ScreenComm : MonoBehaviour
         //Save serverURL to PlayerPrefs
         PlayerPrefs.SetString("serverURL", serverURL);
         PlayerPrefs.Save();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        isPaused = pauseStatus;
+        if (pauseStatus)
+        {
+            Debug.Log("Application paused - ReceiveLoop and SendCoordinates stopped");
+        }
+        else
+        {
+            Debug.Log("Application resumed - ReceiveLoop and SendCoordinates resumed");
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        isPaused = !hasFocus;
+        if (!hasFocus)
+        {
+            Debug.Log("Application lost focus - ReceiveLoop and SendCoordinates stopped");
+        }
+        else
+        {
+            Debug.Log("Application gained focus - ReceiveLoop and SendCoordinates resumed");
+        }
     }
 
     private async void OnApplicationQuit()

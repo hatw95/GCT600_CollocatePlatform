@@ -23,11 +23,11 @@ public class TouchDetector : MonoBehaviour
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, transform.position + indexVec * 0.2f);
         }
-        if (hitInfo.collider == null)
-        {
-            Vector2 nullHitPoint = new Vector2(0, 0);
-            screenComm.SendCoordinates(nullHitPoint, (int)handType);
-        }
+        // if (hitInfo.collider == null)
+        // {
+        //     Vector2 nullHitPoint = new Vector2(0, 0);
+        //     screenComm.SendCoordinates(nullHitPoint, (int)handType);
+        // }
         if (hitInfo.collider.tag == "Touch")
         {
             Vector2 hitPoint2 = new Vector2(hitInfo.point.x, hitInfo.point.y);

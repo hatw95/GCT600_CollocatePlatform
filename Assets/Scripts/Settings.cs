@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-    [Header("Meta Hand")]
     public OVRHand hand;           // 같은 손의 OVRHand
     public OVRSkeleton skeleton;   // 같은 손의 OVRSkeleton
 
-    [Header("UI / Anchor")]
     public Transform button;       // 월드 스페이스 버튼(또는 그 루트 Transform)
     public Camera xrCamera;        // CenterEyeAnchor 권장
 
-    [Header("Tuning")]
-    [Tooltip("손바닥 법선 방향으로 띄우는 거리(m)")]
     public float offsetAlongNormal = 0.06f;
-    [Tooltip("손바닥이 사용자를 향하고 있다고 볼 최소 코사인 값(0.5≈60°)")]
     public float appearDotThreshold = 0.5f;
-    [Tooltip("위치/회전 스무딩(클수록 빠르게 따라감)")]
     public float smoothPos = 20f;
     public float smoothRot = 20f;
-    [Tooltip("손을 쥐고 있을 땐 숨기기")]
     public bool requireOpenPalm = true;
     public float openPalmPinchMax = 0.2f;
 
