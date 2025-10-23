@@ -122,8 +122,8 @@ README.md 예시
 본 폴더는 Team 1의 Unity 콘텐츠를 포함합니다.
 
 ## 실행 방법
-1. Unity 2022.3.x 이상 버전으로 프로젝트 열기  
-2. `Assets/teams/team_1/Scenes/Main.unity` 실행
+1. `Assets/teams/team_1/Scenes/Main` 실행
+...
 
 ## 변경 내역
 - 초기 환경 세팅
