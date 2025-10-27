@@ -37,6 +37,7 @@ public class ScreenComm : MonoBehaviour
         await ws.ConnectAsync(serverUri, cts.Token);
 
         _ = Task.Run(ReceiveLoop);
+        Debug.Log("WebSocket connected to " + serverURL);
     }
 
     private async Task ReceiveLoop()
@@ -76,8 +77,7 @@ public class ScreenComm : MonoBehaviour
 
     public async void SendCoordinates(Vector2 coords, int tag)
     {
-        if (ws == null || ws.State != WebSocketState.Open || isPaused) return;
-
+        if (ws == null || ws.State != WebSocketState.Open) return;
         string json = "{\"x\":" + coords.x + ", \"y\":" + coords.y + ", \"tag\":" + tag + "}";
         ArraySegment<byte> bytesToSend = new ArraySegment<byte>(Encoding.UTF8.GetBytes(json));
 
