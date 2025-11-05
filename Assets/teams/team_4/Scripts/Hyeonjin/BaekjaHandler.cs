@@ -11,6 +11,7 @@ public class BaekjaHandler : MonoBehaviour
     [Header("Fused Baekja Settings")]
     [SerializeField] public GameObject fusedBaekjaPrefab;
     [SerializeField] public GameObject spawnPoint;  // 테이블 위치 저장
+    [SerializeField] public float spawnYThreshold = 1.5f;
     [SerializeField] public float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
 
     private void Awake()
@@ -20,13 +21,15 @@ public class BaekjaHandler : MonoBehaviour
 
     public void SpawnFusedBaekja(GameObject baekja1, GameObject baekja2)
     {
-        
+
         // 중복 호출 방지
         if (baekja1 == null || baekja2 == null) return;
 
-        // 정해진 위치(테이블 위)에 가상 백자 생성 -> 서서히 나타나게
-        GameObject fusedBaekja = Instantiate(fusedBaekjaPrefab, spawnPoint.transform.position, Quaternion.identity);
-
+        // 백자 생성 위치 조정
+        Vector3 spawnPos = spawnPoint.transform.position + Vector3.up * spawnYThreshold;
+        // 정해진 위치(테이블 위)에 가상 백자 초기화
+        GameObject fusedBaekja = Instantiate(fusedBaekjaPrefab, spawnPos, Quaternion.identity);
+        // 서서히 나타나게 하기
         FadeUtility.Instance.FadeIn(fusedBaekja, fadeDuration, 0f);
         
         OnBaekjaCreated?.Invoke(fusedBaekja);       // 가상 백자가 생성되었다는 것을 알림

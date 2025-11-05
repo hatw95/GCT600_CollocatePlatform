@@ -5,6 +5,7 @@ public class JeongController : MonoBehaviour
 {
     [SerializeField] private GameObject jeongPrefab;
     [SerializeField] private float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
+    [SerializeField] public float spawnYThreshold = 2.0f;
 
     private void OnEnable()
     {
@@ -30,7 +31,7 @@ public class JeongController : MonoBehaviour
 
     private void ShowJeongPrefab(GameObject fusedBaekja)
     {
-        Vector3 jeongPos = fusedBaekja.transform.position + Vector3.up * 1.5f;
+        Vector3 jeongPos = fusedBaekja.transform.position + Vector3.up * spawnYThreshold;
         GameObject jeongObj = Instantiate(jeongPrefab, jeongPos, Quaternion.identity);
 
         // 정 페이드인

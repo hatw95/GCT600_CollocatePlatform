@@ -319,6 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fusedBaekjaPrefab: {fileID: 5083505937172475603, guid: b0ea5794f3584274b8c3f1621ec05cb7, type: 3}
   spawnPoint: {fileID: 1488418055}
+  spawnYThreshold: 1.5
   fadeDuration: 2
 --- !u!114 &43847934
 MonoBehaviour:
@@ -1123,6 +1124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jeongPrefab: {fileID: 1248626343129492412, guid: 3e5b30ad2fb32834ab2e6d0d9fab09e7, type: 3}
   fadeDuration: 2
+  spawnYThreshold: 1.3
 --- !u!4 &931492835
 Transform:
   m_ObjectHideFlags: 0
