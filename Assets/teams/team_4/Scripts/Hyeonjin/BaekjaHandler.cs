@@ -1,8 +1,12 @@
 using UnityEngine;
+using System;
 
 public class BaekjaHandler : MonoBehaviour
 {
     public static BaekjaHandler Instance;
+
+    public event Action<GameObject> OnBaekjaCreated;
+
 
     [Header("Fused Baekja Settings")]
     [SerializeField] public GameObject fusedBaekjaPrefab;
@@ -22,12 +26,14 @@ public class BaekjaHandler : MonoBehaviour
 
         // 정해진 위치(테이블 위)에 가상 백자 생성 -> 서서히 나타나게
         GameObject fusedBaekja = Instantiate(fusedBaekjaPrefab, spawnPoint.transform.position, Quaternion.identity);
+
         FadeUtility.Instance.FadeIn(fusedBaekja, fadeDuration, 0f);
+        
+        OnBaekjaCreated?.Invoke(fusedBaekja);       // 가상 백자가 생성되었다는 것을 알림
 
         // 기존 두 백자는 서서히 사라지고 파괴
         FadeUtility.Instance.FadeOut(baekja1, fadeDuration);
         FadeUtility.Instance.FadeOut(baekja2, fadeDuration);
-
         Destroy(baekja1, fadeDuration); // 페이드 다 끝난 후 제거
         Destroy(baekja2, fadeDuration);;
     }
