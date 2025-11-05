@@ -1,7 +1,7 @@
 # Team 4
 
 ## 팀원
-- 김영빈 (@)
+- 김영빈 (@youngbin0212)
 - 김영조 (@yeongjokim)
 - 김현진 (@h-zzn)
 
