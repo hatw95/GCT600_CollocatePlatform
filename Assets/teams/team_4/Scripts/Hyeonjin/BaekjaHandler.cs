@@ -9,10 +9,10 @@ public class BaekjaHandler : MonoBehaviour
 
 
     [Header("Fused Baekja Settings")]
-    [SerializeField] public GameObject fusedBaekjaPrefab;
-    [SerializeField] public GameObject spawnPoint;  // 테이블 위치 저장
-    [SerializeField] public float spawnYThreshold = 1.5f;
-    [SerializeField] public float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
+    [SerializeField] private GameObject fusedBaekjaPrefab;
+    [SerializeField] private GameObject spawnPoint;  // 테이블 위치 저장
+    [SerializeField] private float spawnYThreshold = 1.5f;
+    [SerializeField] private float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
 
     private void Awake()
     {

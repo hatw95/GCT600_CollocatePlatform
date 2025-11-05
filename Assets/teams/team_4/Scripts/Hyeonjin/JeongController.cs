@@ -4,8 +4,9 @@ using System.Collections;
 public class JeongController : MonoBehaviour
 {
     [SerializeField] private GameObject jeongPrefab;
+    [SerializeField] private GameObject tigerPrefab;
     [SerializeField] private float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
-    [SerializeField] public float spawnYThreshold = 2.0f;
+    [SerializeField] private float spawnYThreshold = 2.0f;
 
     private void OnEnable()
     {
@@ -13,6 +14,8 @@ public class JeongController : MonoBehaviour
             BaekjaHandler.Instance.OnBaekjaCreated += ShowJeongPrefab;
         else
             StartCoroutine(WaitAndSubscribe());
+
+        JeongBehavior.OnJeongCollision += HandleJeongCollision;
     }
 
     private IEnumerator WaitAndSubscribe()
@@ -27,6 +30,7 @@ public class JeongController : MonoBehaviour
     private void OnDisable()
     {
         BaekjaHandler.Instance.OnBaekjaCreated -= ShowJeongPrefab;
+        JeongBehavior.OnJeongCollision -= HandleJeongCollision;
     }
 
     private void ShowJeongPrefab(GameObject fusedBaekja)
@@ -37,4 +41,29 @@ public class JeongController : MonoBehaviour
         // 정 페이드인
         FadeUtility.Instance.FadeIn(jeongObj, 1f, 2f);
     }
+
+    private void HandleJeongCollision(GameObject jeongObj, GameObject screenObj)
+    {
+        Debug.Log($"Jeong collided with {screenObj.name}");
+
+        FadeUtility.Instance.FadeOut(jeongObj, 1f);
+        Destroy(jeongObj, 1.5f); 
+        // 정이 다른 오브젝트와 충돌했을 때 처리
+        // [HJ] TODO: 충돌하는 방식, 호랑이 활성화 방식 수정
+        if (screenObj.name.Contains("screen1"))
+        {
+            if (tigerPrefab != null)
+            {
+                Debug.Log("Activate tigerPrefab");
+                // 타이거 오브젝트 활성화
+                tigerPrefab.SetActive(true);
+                FadeUtility.Instance.FadeIn(tigerPrefab, fadeDuration);
+            }
+            else
+            {
+                Debug.Log("tigerPrefab is null");
+            }
+        }
+    }
+    
 }
