@@ -1,17 +1,20 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Custom/DecalProjection"
 {
     Properties
     {
-        _BaseMap ("Base Texture (Original)", 2D) = "white" {}   // ✅ URP 표준명
+        _BaseMap ("Base Texture (Original)", 2D) = "white" {}
+        _BaseColor ("Base Color", Color) = (1,1,1,1)
         _DecalTex ("Decal Texture", 2D) = "white" {}
     }
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 300
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        
+        // ✅ Blend 설정 추가
+        Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite Off
+        ZTest LEqual
 
         Pass
         {
@@ -21,9 +24,11 @@ Shader "Custom/DecalProjection"
 
             #include "UnityCG.cginc"
 
-            sampler2D _BaseMap;    // ✅ 수정됨 (URP)
+            sampler2D _BaseMap;
+            float4 _BaseMap_ST;
+            float4 _BaseColor;
+            
             sampler2D _DecalTex;
-
             float4x4 _ProjectorMatrix;
 
             struct appdata {
@@ -40,33 +45,30 @@ Shader "Custom/DecalProjection"
             v2f vert (appdata v)
             {
                 v2f o;
-                float4 world = mul(unity_ObjectToWorld, v.vertex);
-                o.worldPos = world;
-
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv  = v.uv;
-
+                o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // ✅ 1. 원래 백자 텍스처 유지
-                fixed4 baseColor = tex2D(_BaseMap, i.uv);
-
-                // ✅ 2. 투영 UV 계산
+                // ✅ 데칼 영역만 반환 (원본은 표시 안 함)
                 float4 projCoord = mul(_ProjectorMatrix, i.worldPos);
+                projCoord.xyz /= projCoord.w;
                 float2 projUV = projCoord.xy;
 
-                // ✅ 3. decal 영역만 적용
+                // 데칼 영역 체크
                 if (projUV.x >= 0 && projUV.x <= 1 &&
-                    projUV.y >= 0 && projUV.y <= 1)
+                    projUV.y >= 0 && projUV.y <= 1 &&
+                    projCoord.z >= 0 && projCoord.z <= 1)
                 {
                     fixed4 decal = tex2D(_DecalTex, projUV);
-                    baseColor = lerp(baseColor, decal, decal.a);
+                    return decal;  // ✅ 데칼만 반환
                 }
 
-                return baseColor;
+                // 데칼 영역 밖은 투명
+                return fixed4(0, 0, 0, 0);
             }
 
             ENDCG
