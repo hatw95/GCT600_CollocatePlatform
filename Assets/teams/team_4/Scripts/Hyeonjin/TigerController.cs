@@ -12,8 +12,13 @@ public class TigerController : MonoBehaviour
     {
         if (tigerObject == null)
             tigerObject = this.gameObject;
-        
+
         tigerAnimator = GetComponent<Animator>();
+        
+        if (tigerAnimator == null)
+        {
+            Debug.LogWarning("[TigerController] No Animator component found on the tiger object.");
+        }
     }
 
     private void Start()
@@ -28,11 +33,6 @@ public class TigerController : MonoBehaviour
         {
             tigerObject.SetActive(true);
             FadeUtility.Instance?.FadeIn(tigerObject, fadeDuration, 0f);
-        }
-
-        if (tigerAnimator != null)
-        {
-            // tigerAnimator.SetTrigger("Appear");
         }
     }
 }
