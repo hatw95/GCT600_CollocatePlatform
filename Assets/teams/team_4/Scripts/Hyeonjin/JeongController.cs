@@ -46,12 +46,13 @@ public class JeongController : MonoBehaviour
     {
         Debug.Log($"Jeong collided with {screenObj.name}");
 
-        FadeUtility.Instance.FadeOut(jeongObj, 1f);
-        Destroy(jeongObj, 1.5f); 
         // 정이 다른 오브젝트와 충돌했을 때 처리
         // [HJ] TODO: 충돌하는 방식, 호랑이 활성화 방식 수정
         if (screenObj.name.Contains("screen1"))
         {
+            FadeUtility.Instance.FadeOut(jeongObj, 1f);
+            Destroy(jeongObj, 1.5f); // 페이드 아웃 후 제거
+            
             if (tigerPrefab != null)
             {
                 Debug.Log("Activate tigerPrefab");
