@@ -4,9 +4,10 @@ using System.Collections;
 public class JeongController : MonoBehaviour
 {
     [SerializeField] private GameObject jeongPrefab;
-    [SerializeField] private GameObject tigerPrefab;
     [SerializeField] private float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
     [SerializeField] private float spawnYThreshold = 2.0f;
+
+    [SerializeField] private TigerController tigerController;
 
     private void OnEnable()
     {
@@ -52,17 +53,16 @@ public class JeongController : MonoBehaviour
         {
             FadeUtility.Instance.FadeOut(jeongObj, 1f);
             Destroy(jeongObj, 1.5f); // 페이드 아웃 후 제거
-            
-            if (tigerPrefab != null)
+
+            if (tigerController != null)
             {
                 Debug.Log("Activate tigerPrefab");
                 // 타이거 오브젝트 활성화
-                tigerPrefab.SetActive(true);
-                FadeUtility.Instance.FadeIn(tigerPrefab, fadeDuration);
+                tigerController.AppearTiger();
             }
             else
             {
-                Debug.Log("tigerPrefab is null");
+                Debug.LogWarning("[JeongController] TigerController not assigned!");
             }
         }
     }

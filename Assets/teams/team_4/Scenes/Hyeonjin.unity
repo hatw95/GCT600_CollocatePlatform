@@ -1560,6 +1560,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tiger_sv_rm_HLP
       objectReference: {fileID: 0}
+    - target: {fileID: 3989184835061150127, guid: 931cb6324fe3248ec805de9a92219a5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3989184835061443983, guid: 931cb6324fe3248ec805de9a92219a5e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.41934443
@@ -1605,6 +1609,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 931cb6324fe3248ec805de9a92219a5e, type: 3}
+--- !u!1 &89340972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 89340974}
+  - component: {fileID: 89340973}
+  m_Layer: 0
+  m_Name: TigerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &89340973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89340972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435f528c442cd79489a6f75f18cfdb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tigerObject: {fileID: 1773299430}
+  fadeDuration: 2
+--- !u!4 &89340974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89340972}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &93824799
 GameObject:
   m_ObjectHideFlags: 0
@@ -10113,9 +10163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jeongPrefab: {fileID: 6642724788953225202, guid: 3e5b30ad2fb32834ab2e6d0d9fab09e7, type: 3}
-  tigerPrefab: {fileID: 1009751289}
   fadeDuration: 2
   spawnYThreshold: 1
+  tigerController: {fileID: 89340973}
 --- !u!4 &931492835
 Transform:
   m_ObjectHideFlags: 0
@@ -19156,6 +19206,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893250372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1773299430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3989184835061150127, guid: 931cb6324fe3248ec805de9a92219a5e, type: 3}
+  m_PrefabInstance: {fileID: 82298710}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1780155861
 GameObject:
   m_ObjectHideFlags: 0
@@ -23252,6 +23307,7 @@ SceneRoots:
   - {fileID: 43847935}
   - {fileID: 209019476}
   - {fileID: 931492835}
+  - {fileID: 89340974}
   - {fileID: 307760926}
   - {fileID: 82298710}
   - {fileID: 533903178}
