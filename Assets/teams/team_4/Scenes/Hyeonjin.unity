@@ -1605,10 +1605,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3989184835068396071, guid: 931cb6324fe3248ec805de9a92219a5e, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1645,11 +1641,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tigerObject: {fileID: 1773299430}
   fadeDuration: 2
-  targetPoint: {fileID: 1051607967}
-  moveSpeed: 1.5
-  stopDistance: 0.3
-  DecalManager: {fileID: 1551896223}
-  baekjaManager: {fileID: 43847934}
 --- !u!4 &89340974
 Transform:
   m_ObjectHideFlags: 0
@@ -10605,22 +10596,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MRUK
       objectReference: {fileID: 0}
-    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
-      propertyPath: SceneSettings.RoomPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
-      propertyPath: 'SceneSettings.RoomPrefabs.Array.data[0]'
-      value: 
-      objectReference: {fileID: 3426318296430495451, guid: 35e526707112ea84db34e4fb31f699b3, type: 3}
-    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
-      propertyPath: 'SceneSettings.RoomPrefabs.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3426318296430495451, guid: 35e526707112ea84db34e4fb31f699b3, type: 3}
-    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
-      propertyPath: 'SceneSettings.RoomPrefabs.Array.data[2]'
-      value: 
-      objectReference: {fileID: 3426318296430495451, guid: 35e526707112ea84db34e4fb31f699b3, type: 3}
     - target: {fileID: 8047981335285221976, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -23564,5 +23539,3 @@ SceneRoots:
   - {fileID: 1061344695}
   - {fileID: 1232144392}
   - {fileID: 1009751293}
-  - {fileID: 1051607967}
-  - {fileID: 1133986738}

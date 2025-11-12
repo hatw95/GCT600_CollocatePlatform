@@ -26,6 +26,7 @@ public class TigerController : MonoBehaviour
             tigerObject = this.gameObject;
 
         tigerAnimator = tigerObject.GetComponent<Animator>();
+        tigerAnimator = tigerObject.GetComponent<Animator>();
         
         if (tigerAnimator == null)
         {
@@ -120,6 +121,35 @@ public class TigerController : MonoBehaviour
             FadeUtility.Instance?.FadeIn(tigerObject, fadeDuration, 0f);
         }
     }
+
+    private void MoveToTarget()
+    {
+        tigerAnimator.SetBool("isWalking", true);
+        Vector3 targetPos = targetPoint.position;
+        Vector3 moveDir = (targetPos - tigerObject.transform.position);
+        
+        moveDir.y = 0; // 수평 이동만
+        float distance = moveDir.magnitude;
+
+        if (distance > stopDistance)
+        {
+            // 바라보는 방향 회전
+            Quaternion targetRot = Quaternion.LookRotation(moveDir.normalized);
+            tigerObject.transform.rotation = Quaternion.Slerp(tigerObject.transform.rotation, targetRot, Time.deltaTime * 5f);
+
+            // 앞으로 이동
+            tigerObject.transform.position += tigerObject.transform.forward * moveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            // 도착
+            isWalking = false;
+            Debug.Log("[TigerController] Tiger has reached the target point.");
+            tigerAnimator.SetBool("isWalking", false);
+            tigerAnimator.SetTrigger("Idle");
+        }
+    }
+}
 
     private void MoveToTarget()
     {
