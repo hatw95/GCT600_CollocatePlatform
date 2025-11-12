@@ -9,12 +9,9 @@ public class ProjectionController : MonoBehaviour
     public Transform projector;
 
     [Header("Auto-Run")]
-    [Tooltip("외부 호출 없이 Start에서 자동으로 투영 적용")]
-    public bool autoRun = true;
-    [Tooltip("autoRun 시 등장을 부드럽게 페이드로 처리")]
-    public bool fadeOnStart = true;
-    [Tooltip("projector가 비어있으면 Camera.main을 자동 사용")]
-    public bool fallbackToMainCamera = true;
+    public bool autoRun = false;
+  
+    private bool fadeOnStart = true;
 
     [Header("Fade Settings")]
     [Tooltip("등장 시간(초)")]
@@ -41,7 +38,7 @@ public class ProjectionController : MonoBehaviour
             enabled = false; return;
         }
 
-        if (projector == null && fallbackToMainCamera && Camera.main != null)
+        if (projector == null && Camera.main != null)
             projector = Camera.main.transform;
 
         decalMat = new Material(shader);
@@ -67,18 +64,18 @@ public class ProjectionController : MonoBehaviour
         decalMat.SetColor("_BaseColor", baseColor);
         if (decalTex != null) decalMat.SetTexture("_DecalTex", decalTex);
 
-        // 초기 알파: fadeOnStart면 0, 아니면 1
+        
         if (decalMat.HasProperty("_DecalAlpha"))
             decalMat.SetFloat("_DecalAlpha", fadeOnStart ? 0f : 1f);
 
-        // Renderer에 데칼 머티리얼 부착(맨 뒤)
+        
         var mats = targetRenderer.materials;
         var newMats = new Material[mats.Length + 1];
         for (int i = 0; i < mats.Length; i++) newMats[i] = mats[i];
         newMats[mats.Length] = decalMat;
         targetRenderer.materials = newMats;
 
-        // --- Auto-run: 한 프레임 뒤 안전하게 프로젝션 적용 및 페이드 ---
+        
         if (autoRun) StartCoroutine(IE_AutoProjectAndShow());
     }
 
@@ -87,7 +84,7 @@ public class ProjectionController : MonoBehaviour
         // 머티리얼 교체 직후 한 프레임 양보(드라이버 안정화를 위해)
         yield return null;
 
-        // projector가 준비되었는지 확인 후 한 번 계산
+        
         ProjectOnce(); // 즉시 한 번 계산
 
         if (fadeOnStart) PlayFadeIn(fadeInDuration);
@@ -96,7 +93,7 @@ public class ProjectionController : MonoBehaviour
 
     void Update()
     {
-        // projector가 움직이는 경우 실시간 갱신이 필요하면 Update 유지
+        
         if (projector == null || decalMat == null) return;
 
         Matrix4x4 view = projector.worldToLocalMatrix;
@@ -110,9 +107,6 @@ public class ProjectionController : MonoBehaviour
         decalMat.SetMatrix("_ProjectorMatrix", projectorMatrix);
     }
 
-    // --------- 공개 API (원하는 시점에 호출 가능) ---------
-
-    /// <summary>projector 포즈 기준으로 1회 매트릭스 계산만 수행</summary>
     public void ProjectOnce(float near = 0.01f, float far = 10f)
     {
         if (projector == null || decalMat == null) return;

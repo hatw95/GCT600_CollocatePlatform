@@ -324,7 +324,7 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: ed74883be68196d45aa52bbfe7c71111, type: 3}
   decalTex: {fileID: 2800000, guid: f7544e7a6727d3a42bb6a11b39b7f7f2, type: 3}
   projector: {fileID: 1591388689}
-  autoRun: 1
+  autoRun: 0
   fadeOnStart: 1
   fallbackToMainCamera: 1
   fadeInDuration: 5
@@ -1106,6 +1106,51 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1501379811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1501379813}
+  - component: {fileID: 1501379812}
+  m_Layer: 0
+  m_Name: DecalTestTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1501379812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501379811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63b44006d3d4014993ec23c586a7f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 206062468}
+--- !u!4 &1501379813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501379811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -226.13693, y: 82.02522, z: 873.2538}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1591388688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,3 +1440,4 @@ SceneRoots:
   - {fileID: 454432033}
   - {fileID: 390968293}
   - {fileID: 1591388689}
+  - {fileID: 1501379813}
