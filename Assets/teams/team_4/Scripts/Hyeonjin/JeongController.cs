@@ -51,7 +51,7 @@ public class JeongController : MonoBehaviour
         // [HJ] TODO: 충돌하는 방식, 호랑이 활성화 방식 수정
         if (screenObj.name.Contains("screen1"))
         {
-            FadeUtility.Instance.FadeOut(jeongObj, 1f, 3f);
+            FadeUtility.Instance.FadeOut(jeongObj, 1f);
             Destroy(jeongObj, 1.5f); // 페이드 아웃 후 제거
 
             if (tigerController != null)
