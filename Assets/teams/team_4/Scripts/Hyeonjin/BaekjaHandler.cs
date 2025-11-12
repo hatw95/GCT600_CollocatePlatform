@@ -15,6 +15,7 @@ public class BaekjaHandler : MonoBehaviour
 
     [Header("Fused Baekja Settings")]
     [SerializeField] private GameObject fusedBaekjaPrefab;
+    
     [SerializeField] private float spawnYThreshold = 1.5f;
     [SerializeField] private float fadeDuration = 2f;    // 페이드 인/아웃 지속 시간
     private GameObject spawnPoint;
@@ -133,7 +134,7 @@ public class BaekjaHandler : MonoBehaviour
         Debug.Log($"[BaekjaHandler] Spawned Baekja A at {posA}, Baekja B at {posB}");
     }
 
-    public void SpawnFusedBaekja(GameObject baekja1, GameObject baekja2)
+    public void SpawnFusedBaekja(GameObject baekja1, GameObject baekja2, GameObject perfectBaekja)
     {
         if (spawnPoint == null)
         {
@@ -172,6 +173,18 @@ public class BaekjaHandler : MonoBehaviour
         FadeUtility.Instance.FadeIn(fusedBaekja, fadeDuration, 0f);
 
         OnBaekjaCreated?.Invoke(fusedBaekja);       // 가상 백자가 생성되었다는 것을 알림
+        
+        if (perfectBaekja != null)
+        {
+            perfectBaekja.transform.position = spawnPos;
+            perfectBaekja.transform.rotation = fusedBaekjaPrefab.transform.rotation;
+            //perfectBaekja.SetActive(true);
+            Debug.Log($"[BaekjaHandler] PerfectBaekja 활성화 및 위치 설정: {spawnPos}");
+        }
+        else
+        {
+            Debug.LogWarning("[BaekjaHandler] PerfectBaekja가 할당되지 않았습니다.");
+        }
 
         // 기존 두 백자는 서서히 사라지고 파괴
         FadeUtility.Instance.FadeOut(baekja1, fadeDuration);

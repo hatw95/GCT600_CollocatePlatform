@@ -12,7 +12,7 @@ public class BaekjaBehavior : MonoBehaviour
             if (GetInstanceID() < otherBaekja.GetInstanceID())
             {
                 Debug.Log($"[Collision] {name} → {otherBaekja.name} (Handled Once)");
-                BaekjaManager.Instance.OnBaekjaCollision(gameObject, otherBaekja.gameObject);
+                BaekjaManager.Instance.OnBaekjaCollision(gameObject, otherBaekja.gameObject, BaekjaManager.Instance.perfectBaekja);
             }
         }
     }

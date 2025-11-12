@@ -25,6 +25,31 @@ public class ProjectionController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log($"[ProjectionController] Start 시작 - GameObject: {gameObject.name}");
+    
+        targetRenderer = GetComponent<Renderer>();
+        if (targetRenderer == null)
+        {
+            Debug.LogError("[ProjectionController] Renderer 없음!");
+            enabled = false; return;
+        }
+        Debug.Log($"[ProjectionController] Renderer 찾음: {targetRenderer.name}");
+
+        if (shader == null)
+        {
+            Debug.LogError("[ProjectionController] Shader 미지정!");
+            enabled = false; return;
+        }
+        Debug.Log($"[ProjectionController] Shader: {shader.name}");
+
+        if (projector == null && Camera.main != null)
+            projector = Camera.main.transform;
+        
+        Debug.Log($"[ProjectionController] Projector: {(projector != null ? projector.name : "NULL")}");
+
+        decalMat = new Material(shader);
+        Debug.Log($"[ProjectionController] DecalMat 생성: {decalMat != null}");
+    
         targetRenderer = GetComponent<Renderer>();
         if (targetRenderer == null)
         {
